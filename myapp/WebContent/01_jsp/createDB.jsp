@@ -8,10 +8,10 @@
 <title></title>
 </head>
 <body>
-<%
+<% 
 bja.connect();
 //bja.createDB("user1");
-bja.disconnect();
+bja.disconnect(); 
 %>
 </body>
 </html>

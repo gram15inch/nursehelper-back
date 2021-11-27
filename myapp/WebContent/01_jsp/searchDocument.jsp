@@ -13,7 +13,7 @@
 String Pno="";
 String Name="김";
 String Addr="";
-String Date="20211101"; */
+String Date="20211101";  */
 
 request.setCharacterEncoding("utf-8");
 String ID =request.getParameter("id");
