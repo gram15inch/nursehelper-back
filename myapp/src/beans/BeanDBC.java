@@ -247,7 +247,7 @@ public class BeanDBC {
 			 	ps = conn.prepareStatement(u0);		
 		  		rs= ps.executeQuery();
 		  		
-			 	String s0 = "SELECT p.no,name,addr,sex,dom,sdate,edate,color "
+			 	String s0 = "SELECT sno,name,addr,sex,dom,sdate,edate,color "
 			 			+ "FROM patients as p "
 			 			+ "INNER JOIN schedule as s ON (p.no= s.no) "
 			 			+ "WHERE sdate LIKE ?";
@@ -258,7 +258,7 @@ public class BeanDBC {
 		  		int index = 0;
 		  		while(rs.next()){
 		  			JSONObject jo = new JSONObject();
-		  			jo.put("idcode",rs.getString("no"));
+		  			jo.put("idcode",rs.getString("sno"));
 		  			jo.put("name",rs.getString("name"));
 		  			jo.put("addr",rs.getString("addr"));
 		  			jo.put("sex",rs.getString("sex"));
