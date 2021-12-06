@@ -9,12 +9,8 @@
 </head>
 <body>
 <%
-/* String ID="user1";
-String Pno="";
-String Name="김";
-String Addr="";
-String Date="20211101";  */
 
+ 
 request.setCharacterEncoding("utf-8");
 String ID =request.getParameter("id");
 String Pno = request.getParameter("pcode");
@@ -22,12 +18,19 @@ String Name =request.getParameter("name");
 String Addr =request.getParameter("addr");
 String Date =request.getParameter("date"); 
 
-bja.connect();
 
 if(ID !=null){
 	System.out.println("document: "+ID+"/"+Name+"/"+Pno+"/"+Date);
+}	
 	
-}
+	
+	/* String ID="user1";
+	String Pno="";
+	String Name="김";
+	String Addr="";
+	String Date="20211101";  
+	bja.connect(); */
+
 JSONObject jom =null;
 if((Name!="" && Name!= null)&&(Date!="" && Date!= null)){
 	jom =  bja.selectDocument(ID,"name",Name,Date);	
@@ -57,8 +60,6 @@ if(jom ==null){
 } 
 
 bja.disconnect();
-//bja.insertUserDB("user5", "patients", "name,sex,dom", "name,M,19300102");
-//bja.deleteUserDB("user5", "patients", "no", "1");
 %>
 </body>
 </html>

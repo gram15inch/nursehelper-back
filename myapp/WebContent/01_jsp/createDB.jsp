@@ -9,8 +9,9 @@
 </head>
 <body>
 <% 
+session = request.getSession();
 bja.connect();
-//bja.createDB("user1");
+bja.createDB("user10");
 bja.disconnect(); 
 %>
 </body>

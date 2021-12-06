@@ -32,7 +32,39 @@ public class BeanDBC {
 			 } catch (SQLException e) { e.printStackTrace(); }
 
 	 }
+	
 
+	public int idCheck(String id) {
+		String u0 = "use android";
+		String sql = "SELECT id FROM USER WHERE ID = ?";
+		
+		
+		try {
+		
+			ps = conn.prepareStatement(u0);
+			ps.executeUpdate();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				if(rs.getString(1).equals(id)) 				
+					return 1; // id중복
+				else
+					return 0; // id없음
+						
+			}else
+				return -1; // id없음
+			
+			
+		}catch(Exception e) { System.out.println("DB연결 실패하거나, SQL문이 틀렸습니다.");
+		  System.out.println(e);
+		  return -2; // db오류
+		  }
+		  
+	
+	}
+	
 	public int resist(String id, String pw, String name, String sex, String pn) {
 		int no = createUser(id,pw,name,sex,pn);
 		
@@ -284,7 +316,81 @@ public class BeanDBC {
 		return jom;
 		
 	}
+	public int deleteSchedule(String id,String sno) {
+		
+		String DBname = "DB"+id;
+		String u0 = "use "+DBname;
+		
+		try {
+		
+			ps = conn.prepareStatement(u0);
+			 ps.executeUpdate();
+			 String d0 = "DELETE from schedule WHERE sno = ?"; 
+			
+			 ps = conn.prepareStatement(d0);
+			 ps.setInt(1, Integer.parseInt(sno));
+			 ps.executeUpdate();
+		
+			 return 1;
+			 }catch (Exception e) {
+				 System.out.println("일정삭제를 실패하거나, SQL문이 틀렸습니다.");
+				 System.out.println(e);
+				 return -1;
+			 }
+		
+	}
+	public int inUpdateSchedule(String id, String sno,String pno, String sdate, String edate, String color) {
+		
+		String dbname = "db"+id;
+		 try {
 
+			 	String u0 = "use "+dbname;
+			 	ps = conn.prepareStatement(u0);		
+		  		rs= ps.executeQuery();
+		  		
+			 	String s0 = "SELECT s.sno AS scode " + 
+			 			" FROM schedule AS s " + 
+			 			"WHERE (s.sno = ?) ";
+		  		ps = conn.prepareStatement(s0);
+		  		ps.setInt(1,Integer.parseInt(sno));
+		  		rs= ps.executeQuery();
+		  		
+		  		if(rs.next()){//값이 있을경우
+		  				String up0 = "update schedule " + 
+		  						"SET " + 
+		  						" sdate = ? " + 
+		  						" edate = ? " + 
+		  						" color = ? " + 
+		  						"WHERE sno =? ";
+				  		ps = conn.prepareStatement(up0);
+				  		
+				  		ps.setString(1, sdate);
+				  		ps.setString(2, edate);
+				  		ps.setString(3, color);
+				  		ps.setInt(4,Integer.parseInt(sno));
+				  		ps.executeUpdate();
+		  			
+		  				return 1;
+
+		  		}else {//값이 없을경우
+	  				
+	  				String in0 = "INSERT INTO schedule(pno,sdate,edate,color) VALUES(?,?,?,?) ";
+			  		ps = conn.prepareStatement(in0);
+			  		ps.setInt(1,Integer.parseInt(pno));
+			  		ps.setString(2, sdate);
+			  		ps.setString(3, edate);
+			  		ps.setString(4, color);
+			  		ps.executeUpdate();
+	  				return 1;
+	  			}
+		  			  
+	  }catch(Exception e) {
+		  System.out.println(e);
+		  System.out.println("inUpDoc sql error");
+		  return -2;
+	  }
+	}
+	
 	public JSONObject selectDocument(String id,String col,String value,String date) {
 		
 		JSONObject jom = new JSONObject();
@@ -337,7 +443,6 @@ public class BeanDBC {
 		return jom;
 		
 	}
-	
 	public int inUpdateDocument(String id,String type, String pno, String date,String memo) {
 		
 	 	
@@ -390,37 +495,7 @@ public class BeanDBC {
 	  }
 	}
 	
-	public int idCheck(String id) {
-		String u0 = "use android";
-		String sql = "SELECT id FROM USER WHERE ID = ?";
-		
-		
-		try {
-		
-			ps = conn.prepareStatement(u0);
-			ps.executeUpdate();
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, id);
-			rs = ps.executeQuery();
-			
-			if(rs.next()) {
-				if(rs.getString(1).equals(id)) 				
-					return 1; // id중복
-				else
-					return 0; // id없음
-						
-			}else
-				return -1; // id없음
-			
-			
-		}catch(Exception e) { System.out.println("DB연결 실패하거나, SQL문이 틀렸습니다.");
-		  System.out.println(e);
-		  return -2; // db오류
-		  }
-		  
 	
-	}
-
 	public int insertUserDB(String id, String table ,String cols, String values) {
 		
 		
