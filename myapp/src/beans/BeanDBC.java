@@ -24,9 +24,20 @@ public class BeanDBC {
 			 //st = conn.createStatement();
 			 } catch (Exception e) { e.printStackTrace(); }
 	 }
+	
+	
 	public void disconnect() {
 		 try {
 			 if (conn != null) { rs.close();  ps.close(); conn.close();
+			 //st.close();
+			 }
+			 } catch (SQLException e) { e.printStackTrace(); }
+
+	 }
+	
+	public void disconnect2() {
+		 try {
+			 if (conn != null) {  ps.close(); conn.close();
 			 //st.close();
 			 }
 			 } catch (SQLException e) { e.printStackTrace(); }

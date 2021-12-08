@@ -11,25 +11,26 @@
 <%
 
  
-request.setCharacterEncoding("utf-8");
+ request.setCharacterEncoding("utf-8");
 String ID =request.getParameter("id");
 String Pno = request.getParameter("pcode");
 String Name =request.getParameter("name");
 String Addr =request.getParameter("addr");
 String Date =request.getParameter("date"); 
-
+ 
 
 if(ID !=null){
 	System.out.println("document: "+ID+"/"+Name+"/"+Pno+"/"+Date);
 }	
-	
-	
-	/* String ID="user1";
+
+	/* 
+	 String ID="user1";
 	String Pno="";
 	String Name="김";
 	String Addr="";
-	String Date="20211101";  
-	bja.connect(); */
+	String Date="20211101";   */
+	
+	bja.connect(); 
 
 JSONObject jom =null;
 if((Name!="" && Name!= null)&&(Date!="" && Date!= null)){

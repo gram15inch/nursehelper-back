@@ -12,7 +12,7 @@
 session = request.getSession();
 bja.connect();
 bja.createDB("user10");
-bja.disconnect(); 
+bja.disconnect2(); 
 %>
 </body>
 </html>
