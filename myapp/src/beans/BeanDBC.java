@@ -507,6 +507,51 @@ public class BeanDBC {
 	}
 	
 	
+	public JSONObject selectPatient(String id, String name) {
+
+		JSONObject jom = new JSONObject();
+	 	JSONArray jArray = new JSONArray();
+	 	
+		String dbname = "db"+id;
+		 try {
+
+			 	String u0 = "use "+dbname;
+			 	ps = conn.prepareStatement(u0);		
+		  		rs= ps.executeQuery();
+		  		
+			 	String s0 = "SELECT * FROM patients WHERE (NAME LIKE ?)";
+			 	
+		  		ps = conn.prepareStatement(s0);
+		  		ps.setString(1, "%"+name+"%");
+		  		rs= ps.executeQuery();
+		  		
+		  		int index = 0;
+		  		while(rs.next()){
+		  			JSONObject jo = new JSONObject();
+		  			jo.put("pcode",rs.getString("no"));
+		  			jo.put("name",rs.getString("name"));
+		  			jo.put("sex",rs.getString("sex"));
+		  			jo.put("dom",rs.getString("dom"));
+		  			jo.put("addr",rs.getString("addr"));
+		  			jArray.add(index,jo);
+		  			index++;
+		  		}
+		  		
+		  		jom.put("main", jArray);
+		  		
+		  
+		  
+	  }catch(Exception e) {
+		  System.out.println(e);
+		  System.out.println("main error");
+		  jom.put("main","error");
+		  return jom;
+	  }
+		
+		return jom;
+		
+	}
+	
 	public int insertUserDB(String id, String table ,String cols, String values) {
 		
 		
