@@ -354,38 +354,56 @@ public class BeanDBC {
 		
 		String dbname = "db"+id;
 		 try {
+			 	if(sno=="-1") {//일정번호가 존재할경우
+			 		String u0 = "use "+dbname;
+				 	ps = conn.prepareStatement(u0);		
+			  		rs= ps.executeQuery();
+			  		
+				 	String s0 = "SELECT s.sno AS scode " + 
+				 			" FROM schedule AS s " + 
+				 			"WHERE (s.no = ?)"
+				 			+ " and (s.sdate =?)"
+				 			+ "and (s.edate =?)";
+			  		ps = conn.prepareStatement(s0);
+			  		ps.setInt(1,Integer.parseInt(pno));
+			  		ps.setString(2, sdate);
+			  		ps.setString(3, edate);
+			  		rs= ps.executeQuery();
+			 		
+			 		
+			 	}else {//환자번호만 존재할경우
+				 	String u0 = "use "+dbname;
+				 	ps = conn.prepareStatement(u0);		
+			  		rs= ps.executeQuery();
+			  		
+				 	String s0 = "SELECT s.sno AS scode " + 
+				 			" FROM schedule AS s " + 
+				 			"WHERE (s.sno = ?) ";
+			  		ps = conn.prepareStatement(s0);
+			  		ps.setInt(1,Integer.parseInt(sno));
+			  		rs= ps.executeQuery();
 
-			 	String u0 = "use "+dbname;
-			 	ps = conn.prepareStatement(u0);		
-		  		rs= ps.executeQuery();
-		  		
-			 	String s0 = "SELECT s.sno AS scode " + 
-			 			" FROM schedule AS s " + 
-			 			"WHERE (s.sno = ?) ";
-		  		ps = conn.prepareStatement(s0);
-		  		ps.setInt(1,Integer.parseInt(sno));
-		  		rs= ps.executeQuery();
-		  		
-		  		if(rs.next()){//값이 있을경우
-		  				String up0 = "update schedule " + 
-		  						"SET " + 
-		  						" sdate = ? " + 
-		  						" edate = ? " + 
-		  						" color = ? " + 
-		  						"WHERE sno =? ";
-				  		ps = conn.prepareStatement(up0);
-				  		
-				  		ps.setString(1, sdate);
-				  		ps.setString(2, edate);
-				  		ps.setString(3, color);
-				  		ps.setInt(4,Integer.parseInt(sno));
-				  		ps.executeUpdate();
-		  			
-		  				return 1;
+			 	}
+			 	if(rs.next()){//값이 있을경우
+	  				String up0 = "update schedule " + 
+	  						"SET " + 
+	  						" sdate = ? " + 
+	  						" edate = ? " + 
+	  						" color = ? " + 
+	  						"WHERE sno =? ";
+			  		ps = conn.prepareStatement(up0);
+			  		
+			  		ps.setString(1, sdate);
+			  		ps.setString(2, edate);
+			  		ps.setString(3, color);
+			  		ps.setInt(4,Integer.parseInt(sno));
+			  		ps.executeUpdate();
+	  			
+	  				return 1;
 
 		  		}else {//값이 없을경우
 	  				
-	  				String in0 = "INSERT INTO schedule(pno,sdate,edate,color) VALUES(?,?,?,?) ";
+	  				String in0 = "INSERT INTO schedule(no,sdate,edate,color) VALUES(?,?,?,?) ";
 			  		ps = conn.prepareStatement(in0);
 			  		ps.setInt(1,Integer.parseInt(pno));
 			  		ps.setString(2, sdate);
@@ -394,10 +412,10 @@ public class BeanDBC {
 			  		ps.executeUpdate();
 	  				return 1;
 	  			}
-		  			  
+			 	
 	  }catch(Exception e) {
 		  System.out.println(e);
-		  System.out.println("inUpDoc sql error");
+		  System.out.println("inUpSche sql error");
 		  return -2;
 	  }
 	}

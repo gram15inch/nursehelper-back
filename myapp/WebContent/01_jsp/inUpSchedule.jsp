@@ -9,7 +9,7 @@
 </head>
 <body>
 <%
-/*  request.setCharacterEncoding("utf-8");
+request.setCharacterEncoding("utf-8");
 String ID =request.getParameter("id");
 String Sno =request.getParameter("sno"); 
 String Pno =request.getParameter("pno"); 
@@ -19,17 +19,17 @@ String Color =request.getParameter("color");
  
 if(ID !=null){
 	System.out.println("InUpSchedule: "+ID+"/"+Sno+"/"+Pno+"/"+Sdate+"/"+Edate+"/"+Color);
-} */
+} 
 
 bja.connect();
-
+/* 
 String ID="test";
 String Sno="4";
 String Pno="4";
 String Sdate="1";
 String Edate="20211101"; 
 String Color = "jspmemoIn";
-
+ */
 //작동 테스트
 
 switch(bja.inUpdateSchedule(ID, Sno,Pno,Sdate, Edate, Color) ) {
