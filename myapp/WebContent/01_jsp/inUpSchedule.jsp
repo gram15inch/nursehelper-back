@@ -19,25 +19,25 @@ String Color =request.getParameter("color");
  
 if(ID !=null){
 	System.out.println("InUpSchedule: "+ID+"/"+Sno+"/"+Pno+"/"+Sdate+"/"+Edate+"/"+Color);
-} 
+}  
 
 bja.connect();
 /* 
 String ID="test";
-String Sno="4";
-String Pno="4";
-String Sdate="1";
-String Edate="20211101"; 
-String Color = "jspmemoIn";
- */
+String Sno="28";
+String Pno="-1";
+String Sdate="202111010800";
+String Edate="202111010903"; 
+String Color = "#jspColorIn";
+  */
 //작동 테스트
-
-switch(bja.inUpdateSchedule(ID, Sno,Pno,Sdate, Edate, Color) ) {
-case 1: out.println("success");
+int p =-2;
+switch(p=bja.inUpdateSchedule(ID, Sno,Pno,Sdate, Edate, Color) ) {
+case -1: out.println("??? error"); //save error
      break;
 case -2: out.println("db error");
      break;
-default: out.println("??? error");
+default: out.println(""+p);
      break;
 }
 

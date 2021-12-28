@@ -351,14 +351,15 @@ public class BeanDBC {
 		
 	}
 	public int inUpdateSchedule(String id, String sno,String pno, String sdate, String edate, String color) {
-		
+
+	 	
 		String dbname = "db"+id;
 		 try {
-			 	if(sno=="-1") {//일정번호가 존재할경우
-			 		String u0 = "use "+dbname;
-				 	ps = conn.prepareStatement(u0);		
-			  		rs= ps.executeQuery();
-			  		
+			 String u0 = "use "+dbname;
+			 	ps = conn.prepareStatement(u0);		
+		  		rs= ps.executeQuery();
+			 	if(sno=="-1") {//환자번호가 존재할경우
+			 		  		
 				 	String s0 = "SELECT s.sno AS scode " + 
 				 			" FROM schedule AS s " + 
 				 			"WHERE (s.no = ?)"
@@ -371,12 +372,9 @@ public class BeanDBC {
 			  		rs= ps.executeQuery();
 			 		
 			 		
-			 	}else {//환자번호만 존재할경우
-				 	String u0 = "use "+dbname;
-				 	ps = conn.prepareStatement(u0);		
-			  		rs= ps.executeQuery();
-			  		
-				 	String s0 = "SELECT s.sno AS scode " + 
+			 	}else {//일정번호가가 존재할경우
+
+				 	String s0 = "SELECT s.sno " + 
 				 			" FROM schedule AS s " + 
 				 			"WHERE (s.sno = ?) ";
 			  		ps = conn.prepareStatement(s0);
@@ -384,22 +382,22 @@ public class BeanDBC {
 			  		rs= ps.executeQuery();
 
 			 	}
+			 	
 			 	if(rs.next()){//값이 있을경우
 	  				String up0 = "update schedule " + 
 	  						"SET " + 
 	  						" sdate = ? " + 
-	  						" edate = ? " + 
-	  						" color = ? " + 
+	  						", edate = ? " + 
+	  						", color = ? " + 
 	  						"WHERE sno =? ";
 			  		ps = conn.prepareStatement(up0);
-			  		
 			  		ps.setString(1, sdate);
 			  		ps.setString(2, edate);
 			  		ps.setString(3, color);
 			  		ps.setInt(4,Integer.parseInt(sno));
 			  		ps.executeUpdate();
 	  			
-	  				return 1;
+	  				return Integer.parseInt(sno);
 
 		  		}else {//값이 없을경우
 	  				
@@ -410,7 +408,26 @@ public class BeanDBC {
 			  		ps.setString(3, edate);
 			  		ps.setString(4, color);
 			  		ps.executeUpdate();
-	  				return 1;
+			  		
+			  		
+			  		
+			  		
+			  		String s1 ="SELECT sno FROM schedule "
+			  				+ "WHERE (no=?) AND (sdate = ?) AND (edate = ?) ";
+	  				ps = conn.prepareStatement(s1);
+			  		ps.setInt(1,Integer.parseInt(pno));
+			  		ps.setString(2, sdate);
+			  		ps.setString(3, edate);
+			  		rs= ps.executeQuery();
+	
+			  		if(rs.next()){
+			  			
+			  			return Integer.parseInt(rs.getString("sno"));
+			  		}
+			  		
+			  		
+			  		
+	  				return -1;
 	  			}
 			 	
 	  }catch(Exception e) {
