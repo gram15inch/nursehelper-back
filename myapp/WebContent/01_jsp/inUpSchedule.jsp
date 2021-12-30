@@ -16,7 +16,11 @@ String Pno =request.getParameter("pno");
 String Sdate = request.getParameter("sdate");
 String Edate =request.getParameter("edate");
 String Color =request.getParameter("color"); 
- 
+
+String Date = Sdate.substring(0,8);
+String Type = "1";
+String Memo ="";
+
 if(ID !=null){
 	System.out.println("InUpSchedule: "+ID+"/"+Sno+"/"+Pno+"/"+Sdate+"/"+Edate+"/"+Color);
 }  
@@ -31,14 +35,21 @@ String Edate="202111010903";
 String Color = "#jspColorIn";
   */
 //작동 테스트
-int p =-2;
-switch(p=bja.inUpdateSchedule(ID, Sno,Pno,Sdate, Edate, Color) ) {
+
+int sr = bja.inUpdateSchedule(ID, Sno,Pno,Sdate, Edate, Color);
+
+
+switch(sr) {
 case -1: out.println("??? error"); //save error
      break;
 case -2: out.println("db error");
      break;
-default: out.println(""+p);
-     break;
+default: {
+	out.println(""+sr);
+	bja.inUpdateDocument(ID,Type,Pno,Date,Memo);
+	
+};
+	break;
 }
 
 
