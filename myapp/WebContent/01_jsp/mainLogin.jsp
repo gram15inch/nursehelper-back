@@ -15,7 +15,8 @@ String PW = request.getParameter("pw");
 
 <%
 bja.connect();
-
+if(ID !=null)
+	System.out.println("login: "+ID); 
 switch(bja.verifyUser(ID, PW)) {
 case 1:  
 	session = request.getSession();

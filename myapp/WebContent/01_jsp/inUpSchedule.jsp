@@ -46,6 +46,7 @@ case -2: out.println("db error");
      break;
 default: {
 	out.println(""+sr);
+	if(Sno == "-1")
 	bja.inUpdateDocument(ID,Type,Pno,Date,Memo);
 	
 };

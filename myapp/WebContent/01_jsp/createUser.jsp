@@ -36,7 +36,7 @@ case -2: out.println("db");
 	break;
 }
 
-bja.disconnect();
+bja.disconnect2();
 %>
 
 </body>
