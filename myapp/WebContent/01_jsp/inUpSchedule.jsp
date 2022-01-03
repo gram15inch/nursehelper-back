@@ -36,7 +36,7 @@ String Color = "#jspColorIn";
   */
 //작동 테스트
 
-int sr = bja.inUpdateSchedule(ID, Sno,Pno,Sdate, Edate, Color);
+int sr = bja.inUpdateSchedule(ID, Sno, Pno, Sdate, Edate, Color);
 
 
 switch(sr) {
@@ -46,8 +46,9 @@ case -2: out.println("db error");
      break;
 default: {
 	out.println(""+sr);
-	if(Sno == "-1")
+	if(Sno.equals("-1")){
 	bja.inUpdateDocument(ID,Type,Pno,Date,Memo);
+	}
 	
 };
 	break;
